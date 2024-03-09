@@ -18,10 +18,10 @@ import data_processor
 
 logging.basicConfig(level=logging.INFO)
 
-features = ['emp_len','int_rate','log_annual_inc','fico_range_high','loan_amnt']
-numeric_features = ['int_rate','log_annual_inc','fico_range_high','loan_amnt']
-categorical_features = ['emp_len']
-label = 'fully_paid'
+features = ['yearly_income','is_female','is_married','colg_edu','is_professional','is_retired','is_unemployed','months_residence','dual_income','have_minors','own_house','race_white','speak_english']
+numeric_features = ['months_residence','yearly_income']
+categorical_features = ['is_female','is_married','colg_edu','is_professional','is_retired','is_unemployed','dual_income','have_minors','own_house','race_white','speak_english']
+label = 'subscribed'
 
 def run(data_path, model_path, f1_criteria):
     logging.info('Process Data...')

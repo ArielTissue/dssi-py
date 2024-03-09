@@ -15,19 +15,9 @@ def log_txf(df, cols: list):
         df['log_'+col] = np.log(df[col]+1)
     return df
 
-def remap_emp_length(x):
-    if x in ['< 1 year','1 year','2 years']:
-        return 'less_than_3yr'
-    if x in ['3 years','4 years','5 years']:
-        return '3_to_5yr'
-    if x in ['6 years','7 years','8 years','9 years']:
-        return '6_to_9yr'
-    return 'more_than_9yr'
 
 def run(data_path):
     df = load_data(data_path)
-    df = log_txf(df, ['annual_inc'])
-    df['emp_len'] = df['emp_length'].map(remap_emp_length)
     save_data(data_path, df)
     return df
 
