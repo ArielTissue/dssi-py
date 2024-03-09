@@ -44,7 +44,7 @@ def app_body():
                                     yearly_income=st.session_state['input_features']['yearly_income'],
                                     colg_edu=st.session_state['input_features']['colg_edu'],
                                     months_residence=st.session_state['input_features']['months_residence'])
-        if assessment.lower() == '1':
+        if assessment == '1':
             st.success(default_msg.format('Subscribed'))
         else:
             st.warning(default_msg.format('Not Subscribed'))
