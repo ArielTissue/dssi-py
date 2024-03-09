@@ -7,19 +7,20 @@ if 'input_features' not in st.session_state:
 
 def app_sidebar():
     st.sidebar.header('Loan Details')
-    emp_length_options = ['< 1 year','1 year','2 years','3 years','4 years','5 years',
-                          '6 years','7 years','8 years','9 years','10+ years']
-    emp_length = st.sidebar.selectbox("Employment Length", emp_length_options)
-    int_rate = st.sidebar.slider('Loan Interest Rate', 5, 40, 10, 1)
-    annual_inc = st.sidebar.text_input("Annual Income '000s", placeholder="in '000s")
-    fico_range_high = st.sidebar.slider('FICO Upper Boundary', 600, 800, 700, 50)
-    loan_amnt = st.sidebar.text_input('Loan Amount')
+    is_female_options = ['0','1']
+    is_married_options = ['0','1']
+    colg_edu_options = ['0','1']
+    is_female = st.sidebar.selectbox("Is Female", is_female_options)
+    is_married = st.sidebar.selectbox("Is Married", is_married_options)
+    colg_edu = st.sidebar.selectbox("Colg Education", colg_edu_options)
+    yearly_income = st.sidebar.text_input("Yearly Income '000s", placeholder="in '000s")
+    months_residence = st.sidebar.slider('Months Residences', 0, 80, 30, 1)
     def get_input_features():
-        input_features = {'emp_length': emp_length,
-                          'int_rate': int_rate,
-                          'annual_inc': int(annual_inc)*1000,
-                          'fico_range_high': fico_range_high,
-                          'loan_amnt': int(loan_amnt)
+        input_features = {'is_female': is_female,
+                          'is_married': is_married,
+                          'colg_edu':colg_edu,
+                          'yearly_income': int(yearly_income)*1000,
+                          'months_residence': months_residence,
                          }
         return input_features
     sdb_col1, sdb_col2 = st.sidebar.columns(2)
@@ -34,19 +35,19 @@ def app_sidebar():
     return None
 
 def app_body():
-    title = '<p style="font-family:arial, sans-serif; color:Black; font-size: 40px;"><b> Welcome to DSSI Loan Assessment</b></p>'
+    title = '<p style="font-family:arial, sans-serif; color:Black; font-size: 40px;"><b> Welcome to Coupon Subscription Assessment</b></p>'
     st.markdown(title, unsafe_allow_html=True)
     default_msg = '**System assessment says:** {}'
     if st.session_state['input_features']:
-        assessment = get_prediction(emp_length=st.session_state['input_features']['emp_length'],
-                                    int_rate=st.session_state['input_features']['int_rate'],
-                                    annual_inc=st.session_state['input_features']['annual_inc'],
-                                    fico_range_high=st.session_state['input_features']['fico_range_high'],
-                                    loan_amnt=st.session_state['input_features']['loan_amnt'])
-        if assessment.lower() == 'yes':
-            st.success(default_msg.format('Approved'))
+        assessment = get_prediction(is_female=st.session_state['input_features']['is_female'],
+                                    is_married=st.session_state['input_features']['is_married'],
+                                    yearly_income=st.session_state['input_features']['yearly_income'],
+                                    colg_edu=st.session_state['input_features']['colg_edu'],
+                                    months_residence=st.session_state['input_features']['months_residence'])
+        if assessment.lower() == '1':
+            st.success(default_msg.format('Subscribed'))
         else:
-            st.warning(default_msg.format('Rejected'))
+            st.warning(default_msg.format('Not Subscribed'))
     return None
 
 def main():

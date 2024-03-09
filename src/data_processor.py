@@ -18,6 +18,7 @@ def log_txf(df, cols: list):
 
 def run(data_path):
     df = load_data(data_path)
+    df = log_txf(df, ['yearly_income'])
     save_data(data_path, df)
     return df
 
